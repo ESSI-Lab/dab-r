@@ -1,6 +1,6 @@
-test_that("PropertiesResult parses predefinedLayer JSON", {
+test_that("PropertiesResult parses predefinedSearchArea JSON", {
   data <- list(
-    predefinedLayer = list(
+    predefinedSearchArea = list(
       list(
         observationCount = 1,
         label = "Sesia alto fiume",
@@ -17,7 +17,7 @@ test_that("PropertiesResult parses predefinedLayer JSON", {
   client <- list(base_url = "https://x/", obfuscate_url = function(url) url)
   result <- dabr:::PropertiesResult$new(
     client,
-    "predefinedLayer",
+    "predefinedSearchArea",
     data,
     verbose = FALSE
   )
@@ -38,14 +38,14 @@ test_that("PropertiesResult accumulates multiple pages", {
     obfuscate_url = function(url) url
   )
   page1 <- list(
-    predefinedLayer = list(
+    predefinedSearchArea = list(
       list(observationCount = 1, label = "A", value = "layer-a")
     ),
     resumptionToken = "token-2",
     completed = FALSE
   )
   page2 <- list(
-    predefinedLayer = list(
+    predefinedSearchArea = list(
       list(observationCount = 2, label = "B", value = "layer-b")
     ),
     completed = TRUE
@@ -53,7 +53,7 @@ test_that("PropertiesResult accumulates multiple pages", {
 
   result <- dabr:::PropertiesResult$new(
     client,
-    "predefinedLayer",
+    "predefinedSearchArea",
     page1,
     limit = 1L,
     verbose = FALSE
@@ -65,10 +65,32 @@ test_that("PropertiesResult accumulates multiple pages", {
   expect_equal(df$Label, c("A", "B"))
 })
 
-test_that("constraints_to_query URL-encodes predefinedLayer", {
+test_that("constraints_to_query URL-encodes predefinedSearchArea", {
   value <- "opensearch://shapeFiles:selected-basins_Selected-Basins.1"
-  c <- Constraints(predefinedLayer = value)
+  c <- Constraints(predefinedSearchArea = value)
   q <- constraints_to_query(c)
   expect_false(grepl("://", q, fixed = TRUE))
-  expect_true(grepl("predefinedLayer=", q, fixed = TRUE))
+  expect_true(grepl("predefinedSearchArea=", q, fixed = TRUE))
+})
+
+test_that("Constraints accepts predefinedLayer alias", {
+  value <- "opensearch://layer/1"
+  c <- Constraints(predefinedLayer = value)
+  expect_equal(c$predefinedSearchArea, value)
+  expect_true(grepl("predefinedSearchArea=", constraints_to_query(c), fixed = TRUE))
+})
+
+test_that("normalize_om_api_property maps predefined search area names", {
+  expect_equal(
+    dabr:::normalize_om_api_property(PREDEFINED_SEARCH_AREA),
+    "predefinedSearchArea"
+  )
+  expect_equal(
+    dabr:::normalize_om_api_property("predefinedLayer"),
+    "predefinedSearchArea"
+  )
+  expect_equal(
+    dabr:::normalize_om_api_property("country"),
+    "country"
+  )
 })

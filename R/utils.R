@@ -18,6 +18,24 @@ format_om_api_base_url <- function(template, token, view) {
 
 #' @keywords internal
 #' @noRd
+normalize_om_api_property <- function(property) {
+  if (is.null(property) || !nzchar(property)) {
+    return(property)
+  }
+  p <- as.character(property)[1]
+  if (p %in% c(
+    PREDEFINED_SEARCH_AREA,
+    OM_API_PREDEFINED_SEARCH_AREA_PROPERTY,
+    "predefinedLayer"
+  )) {
+    OM_API_PREDEFINED_SEARCH_AREA_PROPERTY
+  } else {
+    p
+  }
+}
+
+#' @keywords internal
+#' @noRd
 encode_query_value <- function(x) {
   utils::URLencode(as.character(x), reserved = TRUE)
 }

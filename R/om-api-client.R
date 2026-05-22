@@ -313,7 +313,7 @@ DABClientClass <- R6::R6Class(
 #'   \code{\{view\}} placeholders.
 #' @return A [DABClient] R6 object with methods including
 #'   \code{get_features()}, \code{get_observations()},
-#'   \code{get_properties()} (e.g. \code{property = "predefinedLayer"}),
+#'   \code{get_properties()} (e.g. \code{property = PREDEFINED_SEARCH_AREA}),
 #'   \code{download_observations()} (e.g. \code{format = "SHAPEFILE"}),
 #'   and \code{get_observation_with_data()}.
 #' @export

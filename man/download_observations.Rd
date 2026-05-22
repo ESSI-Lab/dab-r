@@ -31,9 +31,9 @@ on a \link{DABClient}, \link{WHOSClient}, or \link{HISCentralClient} object.
 \examples{
 \dontrun{
 client <- HISCentralClient(token = "my-token")
-layers <- client$get_properties("predefinedLayer", limit = 10)
+areas <- client$get_properties(PREDEFINED_SEARCH_AREA, limit = 10)
 dl <- client$download_observations(Constraints(
-  predefinedLayer = layers$get_item(1)$value,
+  predefinedSearchArea = areas$get_item(1)$value,
   beginPosition = "2026-04-01T00:00:00Z",
   endPosition = "2026-04-30T23:59:59Z",
   format = "SHAPEFILE",

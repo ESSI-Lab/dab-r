@@ -6,10 +6,12 @@
 #'
 #' @param bbox Numeric vector of length 4: south, west, north, east.
 #' @param observedProperty,ontology,country,provider,feature,localFeatureIdentifier,
-#'   observationIdentifier,beginPosition,endPosition,spatialRelation,predefinedLayer,
+#'   observationIdentifier,beginPosition,endPosition,spatialRelation,predefinedSearchArea,
 #'   timeInterpolation,intendedObservationSpacing,aggregationDuration,format,
 #'   includeData
 #'   Optional query parameters (character or numeric as appropriate).
+#' @param predefinedLayer Deprecated alias for \code{predefinedSearchArea}; still
+#'   accepted for compatibility.
 #' @param limit Maximum number of results.
 #' @param includeData Logical; when \code{FALSE}, omit observation values
 #'   (e.g. for \code{format = "SHAPEFILE"} geometry downloads).
@@ -33,6 +35,7 @@ Constraints <- function(
     beginPosition = NULL,
     endPosition = NULL,
     spatialRelation = NULL,
+    predefinedSearchArea = NULL,
     predefinedLayer = NULL,
     timeInterpolation = NULL,
     intendedObservationSpacing = NULL,
@@ -40,6 +43,15 @@ Constraints <- function(
     limit = NULL,
     format = NULL,
     includeData = NULL) {
+  if (!is.null(predefinedLayer) && !is.null(predefinedSearchArea) &&
+      !identical(predefinedLayer, predefinedSearchArea)) {
+    stop(
+      "Use only one of predefinedSearchArea and predefinedLayer.",
+      call. = FALSE
+    )
+  }
+  predefined_search_area <- predefinedSearchArea %||% predefinedLayer
+
   structure(
     list(
       bbox = bbox,
@@ -53,7 +65,7 @@ Constraints <- function(
       beginPosition = beginPosition,
       endPosition = endPosition,
       spatialRelation = spatialRelation,
-      predefinedLayer = predefinedLayer,
+      predefinedSearchArea = predefined_search_area,
       timeInterpolation = timeInterpolation,
       intendedObservationSpacing = intendedObservationSpacing,
       aggregationDuration = aggregationDuration,
@@ -96,8 +108,9 @@ constraints_to_query <- function(constraints) {
   scalar_fields <- c(
     "observedProperty", "ontology", "country", "provider", "feature",
     "localFeatureIdentifier", "observationIdentifier", "beginPosition",
-    "endPosition", "spatialRelation", "predefinedLayer", "timeInterpolation",
-    "intendedObservationSpacing", "aggregationDuration", "format"
+    "endPosition", "spatialRelation", "predefinedSearchArea",
+    "timeInterpolation", "intendedObservationSpacing", "aggregationDuration",
+    "format"
   )
   for (field in scalar_fields) {
     value <- constraints[[field]]

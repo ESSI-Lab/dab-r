@@ -16,6 +16,7 @@ Constraints(
   beginPosition = NULL,
   endPosition = NULL,
   spatialRelation = NULL,
+  predefinedSearchArea = NULL,
   predefinedLayer = NULL,
   timeInterpolation = NULL,
   intendedObservationSpacing = NULL,
@@ -28,10 +29,13 @@ Constraints(
 \arguments{
 \item{bbox}{Numeric vector of length 4: south, west, north, east.}
 
-\item{observedProperty, ontology, country, provider, feature, localFeatureIdentifier, }{observationIdentifier,beginPosition,endPosition,spatialRelation,predefinedLayer,
+\item{observedProperty, ontology, country, provider, feature, localFeatureIdentifier, }{observationIdentifier,beginPosition,endPosition,spatialRelation,predefinedSearchArea,
 timeInterpolation,intendedObservationSpacing,aggregationDuration,format,
 includeData
 Optional query parameters (character or numeric as appropriate).}
+
+\item{predefinedLayer}{Deprecated alias for \code{predefinedSearchArea}; still
+accepted for compatibility.}
 
 \item{limit}{Maximum number of results.}
 

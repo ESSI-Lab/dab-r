@@ -38,18 +38,18 @@ client <- WHOSClient(token = "my-token")
 # Generic preproduction endpoint
 # client <- DABClient(token = "my-token", view = "whos")
 
-# List predefined search areas, then query by layer + time
-layers <- client$get_properties("predefinedLayer", limit = 10)
-layers$print_values()
+# List predefined search areas, then query by area + time
+areas <- client$get_properties(PREDEFINED_SEARCH_AREA, limit = 10)
+areas$print_values()
 constraints <- Constraints(
-  predefinedLayer = layers$get_item(1)$value,
+  predefinedSearchArea = areas$get_item(1)$value,
   beginPosition = "2026-04-01T00:00:00Z",
   endPosition = "2026-04-30T23:59:59Z"
 )
 
 # Observation geometries as shapefile (ZIP)
 shape <- client$download_observations(Constraints(
-  predefinedLayer = layers$get_item(1)$value,
+  predefinedSearchArea = areas$get_item(1)$value,
   beginPosition = "2026-04-01T00:00:00Z",
   endPosition = "2026-04-30T23:59:59Z",
   format = "SHAPEFILE",
@@ -119,24 +119,22 @@ status$to_df()
 
 ## Example script
 
-End-to-end HIS-Central workflow (install via remotes, search observations for the
-previous month in a bbox, fetch the first observation’s data, plot):
+End-to-end HIS-Central demo: predefined search area, shapefile map, observation
+list (paginated), and a time-series plot for the previous calendar month.
 
 ```bash
 cp examples/his_central_config.json.example examples/his_central_config.json
-# edit his_central_config.json — token and optional install settings only
+# edit his_central_config.json — token and install.source (github or local)
 Rscript examples/his_central_observation_plot.R
 ```
 
-Config (`examples/his_central_config.json`, gitignored) holds only **token** and
-**install** options; search uses **predefinedLayer** (from the properties API)
-and time range in the script. With
-`"source": "auto"`, the script installs from your local `dab-r` clone when found
-(parent of `examples/`), otherwise from GitHub. Use `"force": true` to reinstall
-from GitHub even when the remote SHA is unchanged (or `"source": "local"`).
-Copy from [`examples/his_central_config.json.example`](examples/his_central_config.json.example).
-
-See [`examples/his_central_observation_plot.R`](examples/his_central_observation_plot.R).
+- **Config** (`examples/his_central_config.json`, gitignored): token and install
+  only — see [`examples/his_central_config.json.example`](examples/his_central_config.json.example).
+- **Workflow** (layer, dates, limits): edit the Parameters block in
+  [`examples/his_central_observation_plot.R`](examples/his_central_observation_plot.R).
+- **Setup helper**: [`examples/his_central_setup.R`](examples/his_central_setup.R)
+  installs/loads `dabr`; reuse with `init_dabr_example()` in your own scripts.
+- **Full guide**: [`examples/README.md`](examples/README.md).
 
 ## License
 

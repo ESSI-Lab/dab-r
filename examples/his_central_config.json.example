@@ -1,7 +1,7 @@
 {
   "token": "REPLACE_WITH_YOUR_DAB_TOKEN",
   "install": {
-    "source": "auto",
+    "source": "github",
     "github_repo": "ESSI-Lab/dab-r",
     "github_ref": "",
     "force": false

@@ -4,7 +4,7 @@
 \alias{get_properties}
 \title{Query OM-API property values}
 \arguments{
-\item{property}{Property name (e.g. \code{"predefinedLayer"}).}
+\item{property}{Property name (e.g. \link{PREDEFINED_SEARCH_AREA}).}
 
 \item{limit}{Optional page size (maximum number of values per request).}
 
@@ -18,7 +18,7 @@ an entry (use its \code{$value} in \code{\link[=Constraints]{Constraints()}}).
 }
 \description{
 Retrieves distinct values for a constraint property (e.g. predefined search
-areas via \code{property = "predefinedLayer"}). Supports pagination via
+areas via \code{property = PREDEFINED_SEARCH_AREA}). Supports pagination via
 \code{$next_page()} and \code{$fetch_all_pages()} when the API returns a
 \code{resumptionToken}.
 }
@@ -29,10 +29,10 @@ Call on a \link{DABClient}, \link{WHOSClient}, or \link{HISCentralClient} object
 \examples{
 \dontrun{
 client <- HISCentralClient(token = "my-token")
-layers <- client$get_properties("predefinedLayer", limit = 10)
-layers$fetch_all_pages()
-layers$print_values()
-constraints <- Constraints(predefinedLayer = layers$get_item(1)$value)
+areas <- client$get_properties(PREDEFINED_SEARCH_AREA, limit = 10)
+areas$fetch_all_pages()
+areas$print_values()
+constraints <- Constraints(predefinedSearchArea = areas$get_item(1)$value)
 }
 
 }

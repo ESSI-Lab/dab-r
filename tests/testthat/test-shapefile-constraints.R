@@ -1,6 +1,6 @@
 test_that("constraints_to_query supports shapefile download parameters", {
   c <- Constraints(
-    predefinedLayer = "opensearch://layer/1",
+    predefinedSearchArea = "opensearch://layer/1",
     beginPosition = "2026-04-01T00:00:00Z",
     endPosition = "2026-04-30T23:59:59Z",
     format = "SHAPEFILE",
@@ -9,7 +9,7 @@ test_that("constraints_to_query supports shapefile download parameters", {
   q <- constraints_to_query(c)
   expect_match(q, "format=SHAPEFILE", fixed = TRUE)
   expect_match(q, "includeData=false", fixed = TRUE)
-  expect_match(q, "predefinedLayer=", fixed = TRUE)
+  expect_match(q, "predefinedSearchArea=", fixed = TRUE)
 })
 
 test_that("unzip_shapefile_archive finds shp in zip", {

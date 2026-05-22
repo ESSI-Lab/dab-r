@@ -11,6 +11,8 @@
 dabr.Rcheck/
 
 # Script config
-his_central_config.json
-/his_central_config.json
+examples/his_central_config.json
+/examples/his_central_config.json
 /*.zip
+/examples/Torrente_Evenson_observations.zip
+/examples/Rplots.pdf

@@ -129,7 +129,7 @@ PropertiesResult <- R6::R6Class(
       prefix <- if (self$page == 1L) "first" else "next"
       title <- switch(
         self$property,
-        predefinedLayer = "predefined search areas",
+        predefinedSearchArea = "predefined search areas",
         paste0("property values (", self$property, ")")
       )
       msg <- paste0("Returned ", prefix, " ", n_returned, " ", title)
@@ -149,7 +149,7 @@ PropertiesResult <- R6::R6Class(
     print_values = function() {
       title <- switch(
         self$property,
-        predefinedLayer = "Predefined search areas",
+        predefinedSearchArea = "Predefined search areas",
         paste0("Property values: ", self$property)
       )
       message(title, " (", length(self$entries), " entries total):")
@@ -221,8 +221,12 @@ properties_all_to_df <- function(properties) {
 #' @noRd
 fetch_om_properties <- function(client, property, limit = NULL, verbose = TRUE) {
   if (is.null(property) || !nzchar(property)) {
-    stop("property is required (e.g. 'predefinedLayer').", call. = FALSE)
+    stop(
+      "property is required (e.g. PREDEFINED_SEARCH_AREA).",
+      call. = FALSE
+    )
   }
+  property <- normalize_om_api_property(property)
   url <- paste0(
     client$base_url,
     "properties?property=",
@@ -247,14 +251,14 @@ fetch_om_properties <- function(client, property, limit = NULL, verbose = TRUE) 
 #' Query OM-API property values
 #'
 #' Retrieves distinct values for a constraint property (e.g. predefined search
-#' areas via \code{property = "predefinedLayer"}). Supports pagination via
+#' areas via \code{property = PREDEFINED_SEARCH_AREA}). Supports pagination via
 #' \code{$next_page()} and \code{$fetch_all_pages()} when the API returns a
 #' \code{resumptionToken}.
 #'
 #' Call on a [DABClient], [WHOSClient], or [HISCentralClient] object as
 #' \code{client$get_properties(property, limit, verbose)}.
 #'
-#' @param property Property name (e.g. \code{"predefinedLayer"}).
+#' @param property Property name (e.g. [PREDEFINED_SEARCH_AREA]).
 #' @param limit Optional page size (maximum number of values per request).
 #' @param verbose Print request URLs and page summaries.
 #'
@@ -266,10 +270,10 @@ fetch_om_properties <- function(client, property, limit = NULL, verbose = TRUE) 
 #' @examples
 #' \dontrun{
 #' client <- HISCentralClient(token = "my-token")
-#' layers <- client$get_properties("predefinedLayer", limit = 10)
-#' layers$fetch_all_pages()
-#' layers$print_values()
-#' constraints <- Constraints(predefinedLayer = layers$get_item(1)$value)
+#' areas <- client$get_properties(PREDEFINED_SEARCH_AREA, limit = 10)
+#' areas$fetch_all_pages()
+#' areas$print_values()
+#' constraints <- Constraints(predefinedSearchArea = areas$get_item(1)$value)
 #' }
 #'
 #' @seealso [Constraints()], [properties_to_df()], [properties_all_to_df()]
