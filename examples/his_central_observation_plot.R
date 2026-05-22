@@ -176,7 +176,8 @@ library(ggplot2)
 message("Loaded dabr from: ", system.file(package = "dabr"))
 
 # --- 2. Search parameters (edit here) ----------------------------------------
-properties_limit <- 10L
+properties_page_limit <- 10L
+max_properties_pages <- NULL
 predefined_layer_label <- "Torrente Evenson"
 
 # Temporal extent: previous calendar month (UTC, ISO 8601)
@@ -196,10 +197,17 @@ client <- HISCentralClient(token = token)
 
 predefined_layers <- client$get_properties(
   property = "predefinedLayer",
-  limit = properties_limit
+  limit = properties_page_limit
+)
+message("\nFetching all predefined search areas ...")
+predefined_layers$fetch_all_pages(max_pages = max_properties_pages)
+message(
+  "Total predefined layers: ", length(predefined_layers),
+  " (", predefined_layers$page, " page(s), completed = ",
+  predefined_layers$completed, ")"
 )
 predefined_layers$print_values()
-print(predefined_layers$to_df())
+print(predefined_layers$to_df_all())
 
 if (length(predefined_layers$entries) == 0) {
   stop("No predefined search areas returned by the properties API.", call. = FALSE)

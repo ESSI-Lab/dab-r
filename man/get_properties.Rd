@@ -6,31 +6,36 @@
 \arguments{
 \item{property}{Property name (e.g. \code{"predefinedLayer"}).}
 
-\item{limit}{Optional maximum number of values.}
+\item{limit}{Optional page size (maximum number of values per request).}
 
-\item{verbose}{Print the request URL (token obfuscated).}
+\item{verbose}{Print request URLs and page summaries.}
 }
 \value{
 A \code{PropertiesResult} object. Use \code{$print_values()} to print
-labels and values, \code{$to_df()} or \code{\link[=properties_to_df]{properties_to_df()}} for a table,
-and \code{$get_item(i)} to select an entry (use its \code{$value} in
-\code{\link[=Constraints]{Constraints()}}).
+all accumulated labels and values, \code{$to_df_all()} or
+\code{\link[=properties_all_to_df]{properties_all_to_df()}} for a full table, and \code{$get_item(i)} to select
+an entry (use its \code{$value} in \code{\link[=Constraints]{Constraints()}}).
 }
 \description{
 Retrieves distinct values for a constraint property (e.g. predefined search
-areas via \code{property = "predefinedLayer"}). Call on a \link{DABClient},
-\link{WHOSClient}, or \link{HISCentralClient} object as
+areas via \code{property = "predefinedLayer"}). Supports pagination via
+\code{$next_page()} and \code{$fetch_all_pages()} when the API returns a
+\code{resumptionToken}.
+}
+\details{
+Call on a \link{DABClient}, \link{WHOSClient}, or \link{HISCentralClient} object as
 \code{client$get_properties(property, limit, verbose)}.
 }
 \examples{
 \dontrun{
 client <- HISCentralClient(token = "my-token")
 layers <- client$get_properties("predefinedLayer", limit = 10)
+layers$fetch_all_pages()
 layers$print_values()
 constraints <- Constraints(predefinedLayer = layers$get_item(1)$value)
 }
 
 }
 \seealso{
-\code{\link[=Constraints]{Constraints()}}, \code{\link[=properties_to_df]{properties_to_df()}}
+\code{\link[=Constraints]{Constraints()}}, \code{\link[=properties_to_df]{properties_to_df()}}, \code{\link[=properties_all_to_df]{properties_all_to_df()}}
 }

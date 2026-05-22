@@ -2,7 +2,7 @@
 % Please edit documentation in R/om-api-properties.R
 \name{properties_to_df}
 \alias{properties_to_df}
-\title{Convert a properties result to a data frame}
+\title{Convert a properties result to a data frame (current page)}
 \usage{
 properties_to_df(properties)
 }
@@ -10,8 +10,8 @@ properties_to_df(properties)
 \item{properties}{Object returned by \code{client$get_properties()}.}
 }
 \value{
-A data frame with columns Label, Value, and Observation Count.
+A data frame for the current page only.
 }
 \description{
-Convert a properties result to a data frame
+Convert a properties result to a data frame (current page)
 }
