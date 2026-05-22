@@ -1,0 +1,11 @@
+# R package check and build artifacts
+*.Rcheck/
+*.tar.gz
+*.Rproj
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+# Local check output (named after the package)
+dabr.Rcheck/

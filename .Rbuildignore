@@ -1,0 +1,9 @@
+^dab-py/
+^dab-py/.*$
+^\.git
+^\.git/.*$
+^\.cursor
+^\.cursor/.*$
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.idea$

@@ -1,0 +1,25 @@
+Package: dabr
+Title: DAB Bindings for R
+Version: 1.0.0
+Authors@R: c(
+    person("ESSI-Lab", email = "info@essi-lab.eu", role = c("cre", "cph", "fnd")),
+    person("Enrico Boldrini", role = "aut",
+           comment = "Python reference implementation"))
+Maintainer: ESSI-Lab <info@essi-lab.eu>
+Description: R client for GeoDAB Data Access Bridge (DAB) services, including
+    the Terms API and OGC OM-JSON API (WHOS and HIS-Central). Mirrors the
+    capabilities of the dab-py Python package.
+License: AGPL-3
+URL: https://github.com/ESSI-Lab/dab-r
+BugReports: https://github.com/ESSI-Lab/dab-r/issues
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports:
+    httr2 (>= 1.0.0),
+    jsonlite (>= 1.8.0),
+    R6 (>= 2.5.0)
+Suggests:
+    ggplot2 (>= 3.4.0),
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
