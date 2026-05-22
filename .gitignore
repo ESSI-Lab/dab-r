@@ -13,3 +13,4 @@ dabr.Rcheck/
 # Script config
 his_central_config.json
 /his_central_config.json
+/*.zip

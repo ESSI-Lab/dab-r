@@ -7,9 +7,12 @@
 #' @param bbox Numeric vector of length 4: south, west, north, east.
 #' @param observedProperty,ontology,country,provider,feature,localFeatureIdentifier,
 #'   observationIdentifier,beginPosition,endPosition,spatialRelation,predefinedLayer,
-#'   timeInterpolation,intendedObservationSpacing,aggregationDuration,format
+#'   timeInterpolation,intendedObservationSpacing,aggregationDuration,format,
+#'   includeData
 #'   Optional query parameters (character or numeric as appropriate).
 #' @param limit Maximum number of results.
+#' @param includeData Logical; when \code{FALSE}, omit observation values
+#'   (e.g. for \code{format = "SHAPEFILE"} geometry downloads).
 #'
 #' @return An object of class \code{Constraints}.
 #' @export
@@ -35,7 +38,8 @@ Constraints <- function(
     intendedObservationSpacing = NULL,
     aggregationDuration = NULL,
     limit = NULL,
-    format = NULL) {
+    format = NULL,
+    includeData = NULL) {
   structure(
     list(
       bbox = bbox,
@@ -54,7 +58,8 @@ Constraints <- function(
       intendedObservationSpacing = intendedObservationSpacing,
       aggregationDuration = aggregationDuration,
       limit = limit,
-      format = format
+      format = format,
+      includeData = includeData
     ),
     class = "Constraints"
   )
@@ -97,12 +102,22 @@ constraints_to_query <- function(constraints) {
   for (field in scalar_fields) {
     value <- constraints[[field]]
     if (!is.null(value) && nzchar(as.character(value))) {
-      parts <- c(parts, paste0(field, "=", value))
+      parts <- c(
+        parts,
+        paste0(field, "=", encode_query_value(as.character(value)))
+      )
     }
   }
 
   if (!is.null(constraints$limit)) {
     parts <- c(parts, paste0("limit=", constraints$limit))
+  }
+
+  if (!is.null(constraints$includeData)) {
+    parts <- c(
+      parts,
+      paste0("includeData=", tolower(as.character(constraints$includeData)))
+    )
   }
 
   paste(parts, collapse = "&")

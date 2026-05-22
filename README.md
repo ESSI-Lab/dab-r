@@ -38,7 +38,24 @@ client <- WHOSClient(token = "my-token")
 # Generic preproduction endpoint
 # client <- DABClient(token = "my-token", view = "whos")
 
-constraints <- Constraints(bbox = c(60.398, 22.149, 60.690, 22.730))
+# List predefined search areas, then query by layer + time
+layers <- client$get_properties("predefinedLayer", limit = 10)
+layers$print_values()
+constraints <- Constraints(
+  predefinedLayer = layers$get_item(1)$value,
+  beginPosition = "2026-04-01T00:00:00Z",
+  endPosition = "2026-04-30T23:59:59Z"
+)
+
+# Observation geometries as shapefile (ZIP)
+shape <- client$download_observations(Constraints(
+  predefinedLayer = layers$get_item(1)$value,
+  beginPosition = "2026-04-01T00:00:00Z",
+  endPosition = "2026-04-30T23:59:59Z",
+  format = "SHAPEFILE",
+  includeData = FALSE
+))
+# shape$shp_path — read with sf::st_read(); example script plots on OpenStreetMap
 
 features <- client$get_features(constraints)
 features_df <- features$to_df()
@@ -88,6 +105,7 @@ status$to_df()
 | `DownloadConstraints(...)` | `DownloadConstraints(...)` |
 | `constraints.to_query()` | `constraints_to_query(constraints)` |
 | `client.get_features()` | `client$get_features()` |
+| `collection[0]` | `collection[[1]]` or `collection$get_item(1)` |
 | `collection.next()` | `collection$next_page()` |
 | `collection.to_df()` | `collection$to_df()` |
 | `client.plot_observation()` | `client$plot_observation()` |
@@ -111,7 +129,11 @@ Rscript examples/his_central_observation_plot.R
 ```
 
 Config (`examples/his_central_config.json`, gitignored) holds only **token** and
-**install** options; bbox and time range are set in the script.
+**install** options; search uses **predefinedLayer** (from the properties API)
+and time range in the script. With
+`"source": "auto"`, the script installs from your local `dab-r` clone when found
+(parent of `examples/`), otherwise from GitHub. Use `"force": true` to reinstall
+from GitHub even when the remote SHA is unchanged (or `"source": "local"`).
 Copy from [`examples/his_central_config.json.example`](examples/his_central_config.json.example).
 
 See [`examples/his_central_observation_plot.R`](examples/his_central_observation_plot.R).

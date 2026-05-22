@@ -33,7 +33,17 @@ FeaturesCollection <- R6::R6Class(
 
     length = function() length(self$features),
 
-    `[[` = function(i) self$features[[i]],
+    get_item = function(i) {
+      i <- as.integer(i)[1]
+      if (is.na(i) || i < 1L) {
+        stop("Index must be a positive integer.", call. = FALSE)
+      }
+      if (i > length(self$features)) {
+        stop("Index ", i, " out of range (length = ", length(self$features), ").",
+             call. = FALSE)
+      }
+      self$features[[i]]
+    },
 
     next_page = function() {
       if (self$completed || is.null(self$resumption_token)) {
@@ -120,7 +130,17 @@ ObservationsCollection <- R6::R6Class(
 
     length = function() length(self$observations),
 
-    `[[` = function(i) self$observations[[i]],
+    get_item = function(i) {
+      i <- as.integer(i)[1]
+      if (is.na(i) || i < 1L) {
+        stop("Index must be a positive integer.", call. = FALSE)
+      }
+      if (i > length(self$observations)) {
+        stop("Index ", i, " out of range (length = ", length(self$observations), ").",
+             call. = FALSE)
+      }
+      self$observations[[i]]
+    },
 
     next_page = function() {
       if (self$completed || is.null(self$resumption_token)) {
@@ -160,6 +180,24 @@ ObservationsCollection <- R6::R6Class(
 
     to_df = function() observations_to_df(self),
 
+    to_df_all = function() observations_all_to_df(self),
+
+    fetch_all_pages = function(max_pages = NULL) {
+      pages_fetched <- 0L
+      while (!self$completed) {
+        if (!is.null(max_pages) && self$page >= max_pages) {
+          message(
+            "Stopped pagination at max_pages = ", max_pages,
+            " (", length(self$observations), " observations so far)."
+          )
+          break
+        }
+        self$next_page()
+        pages_fetched <- pages_fetched + 1L
+      }
+      invisible(self)
+    },
+
     print_summary = function(n_returned) {
       prefix <- if (self$page == 1L) "first" else "next"
       msg <- paste0("Returned ", prefix, " ", n_returned, " observations")
@@ -191,7 +229,17 @@ DownloadsCollection <- R6::R6Class(
 
     length = function() length(self$downloads),
 
-    `[[` = function(i) self$downloads[[i]],
+    get_item = function(i) {
+      i <- as.integer(i)[1]
+      if (is.na(i) || i < 1L) {
+        stop("Index must be a positive integer.", call. = FALSE)
+      }
+      if (i > length(self$downloads)) {
+        stop("Index ", i, " out of range (length = ", length(self$downloads), ").",
+             call. = FALSE)
+      }
+      self$downloads[[i]]
+    },
 
     to_df = function() downloads_to_df(self),
 

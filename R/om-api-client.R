@@ -87,6 +87,24 @@ DABClientClass <- R6::R6Class(
       collection
     },
 
+    get_properties = function(property, limit = NULL, verbose = TRUE) {
+      fetch_om_properties(self, property, limit, verbose)
+    },
+
+    download_observations = function(
+        constraints,
+        save_path = NULL,
+        unzip = TRUE,
+        verbose = TRUE) {
+      fetch_observations_download(
+        self,
+        constraints,
+        save_path = save_path,
+        unzip = unzip,
+        verbose = verbose
+      )
+    },
+
     get_observation_with_data = function(
         observation_id,
         begin = NULL,
@@ -179,7 +197,7 @@ DABClientClass <- R6::R6Class(
         }
       }
       repeat {
-        obj <- self$get_download_status(download_id, verbose = FALSE)[[1]]
+        obj <- self$get_download_status(download_id, verbose = FALSE)$get_item(1L)
         current <- normalize(obj$status)
         if (!identical(current, previous_status)) {
           if (is.null(previous_status)) {
@@ -233,7 +251,7 @@ DABClientClass <- R6::R6Class(
     },
 
     save_download = function(download_id, filename = NULL, save_dir = NULL) {
-      obj <- self$get_download_status(download_id, verbose = FALSE)[[1]]
+      obj <- self$get_download_status(download_id, verbose = FALSE)$get_item(1L)
       if (tolower(obj$status) != "completed") {
         stop(
           'Download "', download_id, '" is not completed yet (status: ',
@@ -293,7 +311,11 @@ DABClientClass <- R6::R6Class(
 #' @param view GeoDAB view (e.g. \code{"whos"}, \code{"his-central"}).
 #' @param base_url_template Optional URL template with \code{\{token\}} and
 #'   \code{\{view\}} placeholders.
-#' @return A [DABClient] R6 object.
+#' @return A [DABClient] R6 object with methods including
+#'   \code{get_features()}, \code{get_observations()},
+#'   \code{get_properties()} (e.g. \code{property = "predefinedLayer"}),
+#'   \code{download_observations()} (e.g. \code{format = "SHAPEFILE"}),
+#'   and \code{get_observation_with_data()}.
 #' @export
 #' @examples
 #' \dontrun{

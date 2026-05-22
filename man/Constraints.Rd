@@ -21,17 +21,22 @@ Constraints(
   intendedObservationSpacing = NULL,
   aggregationDuration = NULL,
   limit = NULL,
-  format = NULL
+  format = NULL,
+  includeData = NULL
 )
 }
 \arguments{
 \item{bbox}{Numeric vector of length 4: south, west, north, east.}
 
 \item{observedProperty, ontology, country, provider, feature, localFeatureIdentifier, }{observationIdentifier,beginPosition,endPosition,spatialRelation,predefinedLayer,
-timeInterpolation,intendedObservationSpacing,aggregationDuration,format
+timeInterpolation,intendedObservationSpacing,aggregationDuration,format,
+includeData
 Optional query parameters (character or numeric as appropriate).}
 
 \item{limit}{Maximum number of results.}
+
+\item{includeData}{Logical; when \code{FALSE}, omit observation values
+(e.g. for \code{format = "SHAPEFILE"} geometry downloads).}
 }
 \value{
 An object of class \code{Constraints}.

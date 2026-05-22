@@ -10,8 +10,11 @@ observations_to_df(collection)
 \item{collection}{Object returned by \code{client$get_observations()}.}
 }
 \value{
-A data frame.
+A data frame for \code{collection$current_page_obs} only.
 }
 \description{
 Convert observations to a data frame (current page)
+}
+\seealso{
+\code{\link[=observations_all_to_df]{observations_all_to_df()}} for all pages after \code{$next_page()}.
 }
