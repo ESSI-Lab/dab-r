@@ -1,0 +1,8 @@
+{
+  "token": "REPLACE_WITH_YOUR_GEODAB_TOKEN",
+  "install": {
+    "github_repo": "ESSI-Lab/dab-r",
+    "github_ref": "",
+    "force": false
+  }
+}

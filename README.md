@@ -105,9 +105,14 @@ End-to-end HIS-Central workflow (install via remotes, search observations for th
 previous month in a bbox, fetch the first observation’s data, plot):
 
 ```bash
-export DAB_TOKEN="my-token"
+cp examples/his_central_config.json.example examples/his_central_config.json
+# edit his_central_config.json — token and optional install settings only
 Rscript examples/his_central_observation_plot.R
 ```
+
+Config (`examples/his_central_config.json`, gitignored) holds only **token** and
+**install** options; bbox and time range are set in the script.
+Copy from [`examples/his_central_config.json.example`](examples/his_central_config.json.example).
 
 See [`examples/his_central_observation_plot.R`](examples/his_central_observation_plot.R).
 

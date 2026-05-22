@@ -17,15 +17,11 @@ DABClientClass <- R6::R6Class(
       self$base_url_template <- base_url_template %||%
         "https://gs-service-preproduction.geodab.eu/gs-service/services/essi/token/{token}/view/{view}/om-api/"
 
-      if (!grepl("\\{token\\}", self$token) && !grepl("\\{view\\}", self$view)) {
-        self$base_url <- gsub(
-          "{token}", self$token,
-          gsub("{view}", self$view, self$base_url_template, fixed = TRUE),
-          fixed = TRUE
-        )
-      } else {
-        self$base_url <- self$base_url_template
-      }
+      self$base_url <- format_om_api_base_url(
+        self$base_url_template,
+        self$token,
+        self$view
+      )
     },
 
     obfuscate_url = function(url) {

@@ -8,6 +8,16 @@
 
 #' @keywords internal
 #' @noRd
+format_om_api_base_url <- function(template, token, view) {
+  if (identical(token, "{token}") || identical(view, "{view}")) {
+    return(template)
+  }
+  url <- gsub("{view}", as.character(view), template, fixed = TRUE)
+  gsub("{token}", as.character(token), url, fixed = TRUE)
+}
+
+#' @keywords internal
+#' @noRd
 encode_query_value <- function(x) {
   utils::URLencode(as.character(x), reserved = TRUE)
 }

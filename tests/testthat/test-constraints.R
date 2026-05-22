@@ -29,3 +29,10 @@ test_that("WHOSClient uses WHOS host", {
   client <- WHOSClient(token = "tok")
   expect_match(client$base_url, "whos.geodab.eu")
 })
+
+test_that("HISCentralClient substitutes token and view in base URL", {
+  client <- HISCentralClient(token = "my-secret-token")
+  expect_match(client$base_url, "/token/my-secret-token/view/his-central/om-api/")
+  expect_false(grepl("\\{token\\}", client$base_url))
+  expect_false(grepl("\\{view\\}", client$base_url))
+})

@@ -9,3 +9,7 @@
 
 # Local check output (named after the package)
 dabr.Rcheck/
+
+# Script config
+his_central_config.json
+/his_central_config.json
