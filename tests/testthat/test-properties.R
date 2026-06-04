@@ -15,7 +15,7 @@ test_that("PropertiesResult parses predefinedSearchArea JSON", {
     completed = TRUE
   )
   client <- list(base_url = "https://x/", obfuscate_url = function(url) url)
-  result <- dabr:::PropertiesResult$new(
+  result <- dab.r:::PropertiesResult$new(
     client,
     "predefinedSearchArea",
     data,
@@ -51,7 +51,7 @@ test_that("PropertiesResult accumulates multiple pages", {
     completed = TRUE
   )
 
-  result <- dabr:::PropertiesResult$new(
+  result <- dab.r:::PropertiesResult$new(
     client,
     "predefinedSearchArea",
     page1,
@@ -82,15 +82,15 @@ test_that("Constraints accepts predefinedLayer alias", {
 
 test_that("normalize_om_api_property maps predefined search area names", {
   expect_equal(
-    dabr:::normalize_om_api_property(PREDEFINED_SEARCH_AREA),
+    dab.r:::normalize_om_api_property(PREDEFINED_SEARCH_AREA),
     "predefinedSearchArea"
   )
   expect_equal(
-    dabr:::normalize_om_api_property("predefinedLayer"),
+    dab.r:::normalize_om_api_property("predefinedLayer"),
     "predefinedSearchArea"
   )
   expect_equal(
-    dabr:::normalize_om_api_property("country"),
+    dab.r:::normalize_om_api_property("country"),
     "country"
   )
 })

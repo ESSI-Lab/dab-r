@@ -16,7 +16,7 @@ Dependencies (`httr2`, `jsonlite`, `R6`) are installed automatically. For time-s
 ## DAB Terms API
 
 ```r
-library(dabr)
+library(dab.r)
 
 api <- TermsAPI(token = "my-token", view = "blue-cloud-terms")
 terms <- api$get_terms(type = "instrument", max = 10)
@@ -27,7 +27,7 @@ terms <- api$get_terms(type = "instrument", max = 10)
 ### WHOS or HIS-Central
 
 ```r
-library(dabr)
+library(dab.r)
 
 # WHOS
 client <- WHOSClient(token = "my-token")
@@ -97,7 +97,7 @@ status$to_df()
 
 ## API reference
 
-| Python (`dabpy`) | R (`dabr`) |
+| Python (`dabpy`) | R (`dab.r`) |
 |------------------|------------|
 | `TermsAPI(token, view)` | `TermsAPI(token, view)` |
 | `DABClient` / `WHOSClient` / `HISCentralClient` | `DABClient()` / `WHOSClient()` / `HISCentralClient()` |
@@ -133,7 +133,7 @@ Rscript examples/his_central_observation_plot.R
 - **Workflow** (layer, dates, limits): edit the Parameters block in
   [`examples/his_central_observation_plot.R`](examples/his_central_observation_plot.R).
 - **Setup helper**: [`examples/his_central_setup.R`](examples/his_central_setup.R)
-  installs/loads `dabr`; reuse with `init_dabr_example()` in your own scripts.
+  installs/loads `dab.r`; reuse with `init_dab.r_example()` in your own scripts.
 - **Full guide**: [`examples/README.md`](examples/README.md).
 
 ## License

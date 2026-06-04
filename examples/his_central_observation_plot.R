@@ -12,12 +12,12 @@
 #   Rscript his_central_observation_plot.R
 #   Rscript his_central_observation_plot.R /path/to/his_central_config.json
 #
-# If dabr is already installed, you can skip the setup and start with:
-#   library(dabr); library(ggplot2)
+# If dab.r is already installed, you can skip the setup and start with:
+#   library(dab.r); library(ggplot2)
 #   token <- "your-token"
   # client <- HISCentralClient(token = token)
 #
-# What this script demonstrates (dabr OM-API)
+# What this script demonstrates (dab.r OM-API)
 #   A. List predefined search areas  — get_properties(PREDEFINED_SEARCH_AREA)
 #   B. Download observation footprints — download_observations(SHAPEFILE)
 #   C. Map on OpenStreetMap            — sf + rosm
@@ -36,7 +36,7 @@ script_dir <- if (length(file_arg)) {
 
 config_arg <- commandArgs(trailingOnly = TRUE)[1]
 source(file.path(script_dir, "his_central_setup.R"))
-cfg <- init_dabr_example(config_path = config_arg, script_dir = script_dir)
+cfg <- init_dab.r_example(config_path = config_arg, script_dir = script_dir)
 
 token <- cfg$token
 script_dir <- cfg$script_dir

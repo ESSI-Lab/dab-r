@@ -104,7 +104,7 @@ dab_download_binary <- function(url, save_path = NULL) {
 #' @noRd
 unzip_shapefile_archive <- function(zip_path, extract_dir = NULL) {
   if (is.null(extract_dir)) {
-    extract_dir <- tempfile("dabr_shp_")
+    extract_dir <- tempfile("dab.r_shp_")
     dir.create(extract_dir, recursive = TRUE)
   }
   utils::unzip(zip_path, exdir = extract_dir)

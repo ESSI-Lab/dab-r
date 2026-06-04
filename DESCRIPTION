@@ -1,4 +1,4 @@
-Package: dabr
+Package: dab.r
 Title: DAB Bindings for R
 Version: 1.0.10
 Authors@R: c(

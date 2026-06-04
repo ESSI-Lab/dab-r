@@ -1,4 +1,4 @@
-# dabr examples
+# dab.r examples
 
 Runnable demos for the [GeoDAB OM-API](https://his-central.geodab.eu/gs-service/om-api/) using **HIS-Central**.
 
@@ -21,7 +21,7 @@ Rscript his_central_observation_plot.R /path/to/his_central_config.json
 
 | File | Purpose |
 |------|---------|
-| `his_central_setup.R` | Loads config, installs `dabr` if needed (`github` or `local`), `library(dabr)` |
+| `his_central_setup.R` | Loads config, installs `dab.r` if needed (`github` or `local`), `library(dab.r)` |
 | `his_central_observation_plot.R` | End-to-end workflow: search areas, shapefile, map, observations, time series |
 | `his_central_config.json.example` | Template for `his_central_config.json` (gitignored) |
 
@@ -35,19 +35,19 @@ Only **credentials and install** belong in the config. Search parameters (search
 | `install.source` | yes | `"github"` or `"local"` |
 | `install.github_repo` | no | Default `ESSI-Lab/dab-r` |
 | `install.github_ref` | no | Branch, tag, or commit (empty = default branch) |
-| `install.force` | no | Reinstall even if `dabr` is already installed (default `false`) |
+| `install.force` | no | Reinstall even if `dab.r` is already installed (default `false`) |
 
 **`install.source`**
 
 - **`github`** — `remotes::install_github()` (typical for developers who only clone this repo for the example).
-- **`local`** — `remotes::install_local()` from the package root; use when developing `dabr` in this repository.
+- **`local`** — `remotes::install_local()` from the package root; use when developing `dab.r` in this repository.
 
-## Already have `dabr` installed?
+## Already have `dab.r` installed?
 
 Skip setup and work interactively:
 
 ```r
-library(dabr)
+library(dab.r)
 library(ggplot2)
 
 token <- "your-token"
@@ -72,7 +72,7 @@ Or source only the installer helper:
 
 ```r
 source("his_central_setup.R")
-cfg <- init_dabr_example("his_central_config.json")
+cfg <- init_dab.r_example("his_central_config.json")
 ```
 
 ## What `his_central_observation_plot.R` does

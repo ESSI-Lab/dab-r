@@ -28,7 +28,7 @@ test_that("Observation to_list includes extended OM-JSON fields", {
       points = list()
     )
   )
-  obs <- dabr:::Observation$new(obs_json)
+  obs <- dab.r:::Observation$new(obs_json)
   row <- obs$to_list()
 
   expect_equal(row$`Source ID`, "ita-sir-val-d-aosta")
@@ -38,7 +38,7 @@ test_that("Observation to_list includes extended OM-JSON fields", {
   expect_equal(row$UOM, "mm")
   expect_equal(row$Type, "TimeSeriesObservation")
 
-  coll <- dabr:::ObservationsCollection$new(
+  coll <- dab.r:::ObservationsCollection$new(
     NULL,
     Constraints(),
     initial_obs = list(obs)

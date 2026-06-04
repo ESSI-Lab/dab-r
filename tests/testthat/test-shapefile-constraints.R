@@ -19,7 +19,7 @@ test_that("unzip_shapefile_archive finds shp in zip", {
     }
   }
   skip_if_not_installed("sf")
-  td <- tempfile("dabr_zip_test_")
+  td <- tempfile("dab.r_zip_test_")
   dir.create(td)
   on.exit(unlink(td, recursive = TRUE), add = TRUE)
 
@@ -37,6 +37,6 @@ test_that("unzip_shapefile_archive finds shp in zip", {
   on.exit(setwd(owd), add = TRUE)
   utils::zip(zipfile = zip_path, files = basename(shp_files))
 
-  out <- dabr:::unzip_shapefile_archive(zip_path, extract_dir = file.path(td, "out"))
+  out <- dab.r:::unzip_shapefile_archive(zip_path, extract_dir = file.path(td, "out"))
   expect_true(file.exists(out$shp_path))
 })

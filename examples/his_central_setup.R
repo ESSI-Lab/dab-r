@@ -1,8 +1,8 @@
-# Load config and install dabr (used by his_central_observation_plot.R).
+# Load config and install dab.r (used by his_central_observation_plot.R).
 # Can also be sourced in an interactive session:
-#   cfg <- init_dabr_example("his_central_config.json")
+#   cfg <- init_dab.r_example("his_central_config.json")
 
-init_dabr_example <- function(config_path = NULL, script_dir = NULL) {
+init_dab.r_example <- function(config_path = NULL, script_dir = NULL) {
   cran <- "https://cloud.r-project.org"
 
   if (is.null(script_dir)) {
@@ -10,13 +10,13 @@ init_dabr_example <- function(config_path = NULL, script_dir = NULL) {
   }
 
   print(script_dir)
-  
+
   if (is.null(config_path)) {
     config_path <- file.path(script_dir, "his_central_config.json")
   } else {
     config_path <- normalizePath(config_path, winslash = "/")
   }
-  
+
   if (!file.exists(config_path)) {
     stop(
       "Config not found: ", config_path, "\n",
@@ -42,7 +42,7 @@ init_dabr_example <- function(config_path = NULL, script_dir = NULL) {
     install.packages("remotes", repos = cran)
   }
 
-  local_pkg <- find_dabr_package_dir(script_dir, config_path)
+  local_pkg <- find_dab.r_package_dir(script_dir, config_path)
   if (install_source == "local" && is.null(local_pkg)) {
     stop(
       'install.source is "local" but this directory is not inside the dab-r package.\n',
@@ -51,14 +51,14 @@ init_dabr_example <- function(config_path = NULL, script_dir = NULL) {
     )
   }
 
-  if (!requireNamespace("dabr", quietly = TRUE) || isTRUE(install_cfg$force)) {
+  if (!requireNamespace("dab.r", quietly = TRUE) || isTRUE(install_cfg$force)) {
     if (install_source == "local") {
-      message("Installing dabr from: ", local_pkg)
+      message("Installing dab.r from: ", local_pkg)
       remotes::install_local(local_pkg, upgrade = "always", force = TRUE)
     } else {
       repo <- install_cfg$github_repo %||% "ESSI-Lab/dab-r"
       ref <- install_cfg$github_ref %||% ""
-      message("Installing dabr from GitHub: ", repo)
+      message("Installing dab.r from GitHub: ", repo)
       remotes::install_github(
         repo,
         ref = if (nzchar(ref)) ref else NULL,
@@ -68,7 +68,7 @@ init_dabr_example <- function(config_path = NULL, script_dir = NULL) {
     }
   }
 
-  library(dabr)
+  library(dab.r)
 
   invisible(list(
     token = token,
@@ -98,7 +98,7 @@ read_example_config <- function(path) {
   cfg
 }
 
-find_dabr_package_dir <- function(script_dir, config_path) {
+find_dab.r_package_dir <- function(script_dir, config_path) {
   for (dir in unique(normalizePath(c(
     script_dir,
     file.path(script_dir, ".."),
@@ -107,7 +107,7 @@ find_dabr_package_dir <- function(script_dir, config_path) {
   ), winslash = "/", mustWork = FALSE))) {
     desc <- file.path(dir, "DESCRIPTION")
     if (file.exists(desc) &&
-        any(grepl("^Package:\\s*dabr\\s*$", readLines(desc, n = 20, warn = FALSE)))) {
+        any(grepl("^Package:\\s*dab\\.r\\s*$", readLines(desc, n = 20, warn = FALSE)))) {
       return(dir)
     }
   }

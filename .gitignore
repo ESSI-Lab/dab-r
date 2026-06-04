@@ -8,7 +8,7 @@
 .Ruserdata
 
 # Local check output (named after the package)
-dabr.Rcheck/
+dab.r.Rcheck/
 
 # Script config
 examples/his_central_config.json

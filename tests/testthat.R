@@ -1,4 +1,4 @@
 library(testthat)
-library(dabr)
+library(dab.r)
 
-test_check("dabr")
+test_check("dab.r")

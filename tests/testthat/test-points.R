@@ -1,5 +1,5 @@
 test_that("points_to_df handles missing value without data.frame error", {
-  obs <- dabr:::Observation$new(list(
+  obs <- dab.r:::Observation$new(list(
     id = "obs-1",
     parameter = list(),
     result = list(
@@ -18,7 +18,7 @@ test_that("points_to_df handles missing value without data.frame error", {
 })
 
 test_that("points_to_df returns empty frame when no valid points", {
-  obs <- dabr:::Observation$new(list(
+  obs <- dab.r:::Observation$new(list(
     id = "obs-1",
     parameter = list(),
     result = list(points = list(NULL))
